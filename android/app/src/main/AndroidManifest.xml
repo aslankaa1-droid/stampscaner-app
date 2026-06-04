@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="stampscaner_app"
+        android:label="StampScaner"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
