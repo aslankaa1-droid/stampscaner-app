@@ -75,7 +75,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(context.tr('scanner.title'))),
-      body: Padding(
+      body: SafeArea(
+        top: false,
+        child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
         child: Column(
           children: [
@@ -144,28 +146,26 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen> {
               ),
             ],
             const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: _busy ? null : _pickFromGallery,
-                    icon: const Icon(Icons.photo_library_outlined),
-                    label: Text(context.tr('scanner.fallback.pick')),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton.icon(
-                    onPressed: _busy ? null : _captureFromCamera,
-                    icon: const Icon(Icons.camera_alt),
-                    label: Text(context.tr('scanner.capture')),
-                  ),
-                ),
-              ],
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _busy ? null : _captureFromCamera,
+                icon: const Icon(Icons.camera_alt),
+                label: Text(context.tr('scanner.capture')),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _busy ? null : _pickFromGallery,
+                icon: const Icon(Icons.photo_library_outlined),
+                label: Text(context.tr('scanner.fallback.pick')),
+              ),
             ),
           ],
         ),
+      ),
       ),
     );
   }

@@ -157,7 +157,7 @@ class _QuickActions extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
-      childAspectRatio: 1.6,
+      childAspectRatio: 1.4,
       children: [
         _QuickTile(
           icon: Icons.center_focus_strong,
@@ -214,8 +214,12 @@ class _QuickTile extends StatelessWidget {
               Icon(icon, color: theme.colorScheme.primary, size: 28),
               Text(
                 label,
-                style: theme.textTheme.titleMedium,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  height: 1.15,
+                ),
                 maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

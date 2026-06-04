@@ -183,9 +183,17 @@ class AppTheme {
             return sans.labelSmall?.copyWith(
               color: scheme.primary,
               fontWeight: FontWeight.w600,
+              fontSize: 10.5,
+              letterSpacing: 0,
+              height: 1.1,
             );
           }
-          return sans.labelSmall?.copyWith(color: textSoft);
+          return sans.labelSmall?.copyWith(
+            color: textSoft,
+            fontSize: 10.5,
+            letterSpacing: 0,
+            height: 1.1,
+          );
         }),
         height: 72,
       ),

@@ -81,6 +81,7 @@ class _UserCard extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 28,
@@ -91,6 +92,7 @@ class _UserCard extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(context.tr('profile.guest'),
@@ -98,13 +100,18 @@ class _UserCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   context.tr('profile.signIn'),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.primary,
+                    fontSize: 13,
+                    height: 1.2,
                   ),
                 ),
               ],
             ),
           ),
+          const SizedBox(width: 8),
           Icon(Icons.chevron_right,
               color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
         ],

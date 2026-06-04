@@ -19,7 +19,8 @@ class IdentifyResultScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.tr('identify.title'))),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+        padding: EdgeInsets.fromLTRB(
+            20, 12, 20, 24 + MediaQuery.of(context).viewPadding.bottom),
         children: [
           if (result.imagePath != null)
             ClipRRect(

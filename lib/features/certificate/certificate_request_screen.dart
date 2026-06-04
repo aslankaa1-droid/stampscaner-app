@@ -56,8 +56,9 @@ class _CertificateRequestScreenState
   }
 
   Widget _buildForm(ThemeData theme) {
+    final bottomInset = MediaQuery.of(context).viewPadding.bottom;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+      padding: EdgeInsets.fromLTRB(20, 12, 20, 24 + bottomInset),
       children: [
         Text(
           context.tr('cert.intro'),
