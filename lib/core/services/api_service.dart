@@ -21,7 +21,10 @@ class ApiService {
               receiveTimeout: const Duration(seconds: 60),
             ));
 
-  static const _defaultBaseUrl = 'https://api.stampscaner.com';
+  // Адрес воркера на workers.dev (субдомен аккаунта Cloudflare — idriskaaa).
+  // Заработает сразу после `wrangler deploy` бэкенда stampscaner-backend.
+  // Когда будет привязан Custom Domain api.stampscaner.com — заменить на него.
+  static const _defaultBaseUrl = 'https://stampscaner-backend.idriskaaa.workers.dev';
   final String baseUrl;
   final Dio _dio;
 
