@@ -46,6 +46,29 @@ class ApiService {
     }
   }
 
+  /// Sends a message to Postman (Claude via the Cloudflare Worker) and returns
+  /// the reply text. Returns null on any failure so the UI can fall back to a
+  /// local offline message instead of surfacing an error.
+  Future<String?> postmanChat({
+    required String message,
+    List<Map<String, String>> history = const [],
+  }) async {
+    try {
+      final resp = await _dio.post(
+        '$baseUrl/v1/postman/chat',
+        data: {'message': message, 'history': history},
+      );
+      final body = resp.data;
+      if (body is Map && body['reply'] is String) {
+        final reply = (body['reply'] as String).trim();
+        return reply.isEmpty ? null : reply;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> requestCertificate({
     required IdentificationResult stamp,
     required String tier,

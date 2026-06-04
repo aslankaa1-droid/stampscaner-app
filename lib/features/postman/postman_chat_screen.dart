@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/i18n/translations.dart';
+import '../../core/services/api_service.dart';
 import '../../core/theme/app_colors.dart';
 
 class ChatMessage {
@@ -41,9 +42,18 @@ class _PostmanChatScreenState extends ConsumerState<PostmanChatScreen> {
     super.dispose();
   }
 
-  void _send() {
+  Future<void> _send() async {
     final text = _input.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty || _typing) return;
+
+    // История диалога до нового сообщения — backend сам обрежет до последних реплик.
+    final history = _messages
+        .map((m) => {
+              'role': m.fromUser ? 'user' : 'assistant',
+              'content': m.text,
+            })
+        .toList();
+
     setState(() {
       _messages.add(ChatMessage(fromUser: true, text: text));
       _input.clear();
@@ -51,18 +61,21 @@ class _PostmanChatScreenState extends ConsumerState<PostmanChatScreen> {
     });
     _scrollToBottom();
 
-    // Backend hookup ships in Sprint 2 — local placeholder reply for now.
-    Future.delayed(const Duration(milliseconds: 1200), () {
-      if (!mounted) return;
-      setState(() {
-        _typing = false;
-        _messages.add(ChatMessage(
-          fromUser: false,
-          text: context.tr('postman.offline'),
-        ));
-      });
-      _scrollToBottom();
+    final reply = await ref.read(apiServiceProvider).postmanChat(
+          message: text,
+          history: history,
+        );
+
+    if (!mounted) return;
+    setState(() {
+      _typing = false;
+      // При недоступности backend (reply == null) показываем офлайн-сообщение.
+      _messages.add(ChatMessage(
+        fromUser: false,
+        text: reply ?? context.tr('postman.offline'),
+      ));
     });
+    _scrollToBottom();
   }
 
   void _scrollToBottom() {
